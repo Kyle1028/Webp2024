@@ -6,37 +6,42 @@
     <title>Random Letters</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
+<style>
+.gallery {
+  --g: 6px; /* the gap */
+  
+  display: grid;
+  width: 1200px; /* the size */
+  aspect-ratio: 1;
+  grid: auto-flow 1fr/repeat(3,1fr);
+  gap: var(--g);
+}
+.gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale();
+  cursor: pointer;
+  transition: .5s
+}
+.gallery img:hover {
+  filter: grayscale(0);
+}
+.gallery img:nth-child(2) {
+  grid-area: 1/2/span 2/span 2;
+  clip-path: polygon(0 0,100% 0,100% 100%,calc(50% + var(--g)/4) 100%,0 calc(50% - var(--g)/4))
+}
+.gallery img:nth-child(3) {
+  grid-area: 2/1/span 2/span 2;
+  clip-path: polygon(0 0,calc(50% - var(--g)/4) 0,100% calc(50% + var(--g)/4),100% 100%,0 100%);
+}
+</style>
 <body>
-    <div id="container" tabindex="0" class="blockquote text-nowrap"></div>
-
-    <script>
-        function getRandomLetter() {
-            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-            return alphabet[Math.floor(Math.random() * alphabet.length)];
-        }
-
-        var container = document.getElementById('container');
-        var randomLetters = getRandomLetter() + getRandomLetter() + getRandomLetter();
-        container.textContent = randomLetters;
-
-        window.addEventListener("keyup", function(e) {
-            console.log(e.key);
-            var currentText = container.textContent;
-            if (e.key === currentText[0]) {
-                container.textContent = currentText.substring(1);
-            } else if (e.key == 'Escape') {
-                container.textContent = "";
-            } else if (e.key == 'Backspace') {
-                container.textContent = currentText.substring(0, currentText.length - 1);
-            } else {
-                var randomLettersToAdd = '';
-                var numberOfLetters = Math.floor(Math.random() * 3) + 1; // 生成 1 到 3 個隨機字母
-                for (var i = 0; i < numberOfLetters; i++) {
-                    randomLettersToAdd += getRandomLetter();
-                }
-                container.textContent += randomLettersToAdd;
-            }
-        });
-    </script>
+    <body> 
+        <script src="index.js"></script>
+        <button onclick="getimg()">Get IMG</button> 
+        <div id='gallery' class="gallery"></div> 
+        
+      </body>
 </body>
 </html>
